@@ -1,4 +1,9 @@
-﻿using PostContadores.EventSources;
+﻿using PostContadores.EventListeners;
+using PostContadores.EventSources;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Threading;
 
 namespace PostContadores
@@ -7,13 +12,29 @@ namespace PostContadores
     {
         private static void Main(string[] args)
         {
-            var exampleEventSource = new ExampleEventSource();
+            Console.WriteLine(Process.GetCurrentProcess().Id);
+            var refreshInterval = 5;
 
-            for (var i = 0; i < 3000; i++)
+            var exampleEventSource = new ExampleEventSource();
+            var exampleListener = new ExampleEventListener(refreshInterval);
+            var arguments = new Dictionary<string, string>
+            {
+                {"EventCounterIntervalSec", $"{refreshInterval}"}
+            };
+            exampleListener.EnableEvents(exampleEventSource, EventLevel.Verbose, EventKeywords.All, arguments);
+            for (var i = 0; i < 3000000; i++)
             {
                 exampleEventSource.Increment();
-                Thread.Sleep(100);
             }
+
+            Console.Read();
+
+            for (var i = 0; i < 3000000; i++)
+            {
+                exampleEventSource.Increment();
+                Thread.Sleep(1);
+            }
+            Console.Read();
         }
     }
 }

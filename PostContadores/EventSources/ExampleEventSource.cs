@@ -5,12 +5,13 @@ namespace PostContadores.EventSources
 {
     public class ExampleEventSource : EventSource
     {
+        public const string SourceName = "Example.Fixedbuffer";
         private readonly EventCounter _eventCounter;
         private readonly PollingCounter _poolingCounter;
         private readonly IncrementingEventCounter _incrementingCounter;
         private readonly IncrementingPollingCounter _incrementingPollingCounter;
         private ulong _executions;
-        public ExampleEventSource() : base("Example.Fixedbuffer")
+        public ExampleEventSource() : base(SourceName)
         {
             _eventCounter = new EventCounter("event-counter", this)
             {

@@ -5,7 +5,7 @@ namespace Common.Helpers
 {
     public static class PayloadHelper
     {
-        public static ICounterPayload GetPayload(IDictionary<string, object> payloadFields, int _refreshInterval = 1)
+        public static CounterPayloadBase GetPayload(IDictionary<string, object> payloadFields, int _refreshInterval = 1)
         {
             if (payloadFields["CounterType"].Equals("Sum"))
             {

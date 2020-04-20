@@ -26,7 +26,7 @@ namespace PostContadores.EventListeners
             foreach (IDictionary<string, object> payloadFields in eventData.Payload)
             {
                 var payload = PayloadHelper.GetPayload(payloadFields,_refreshInterval);
-                Console.WriteLine($"{payload.GetName()}={payload.GetValue()}-{payload.GetUnits()}");
+                Console.WriteLine($"{payload.Name}={payload.Value}-{payload.DisplayUnits}");
             }
             base.OnEventWritten(eventData);
         }
